@@ -27,31 +27,27 @@ bool comp(pair<ll,pair<ll,ll>>& a,pair<ll,pair<ll,ll>>& b){
 return a.ff>b.ff;
 }
 
-int mod=1e9+7;
-long long fun(vector<vector<long long>>& dp,vector<int>& v1,vector<int>& v2,map<int,int> mp[],int ck,int ind,int n,int m){
-    if(ind>=n)return 0;
-    if(dp[ind][ck]!=-1)return dp[ind][ck];
-    long long sum=0;
-    if(mp[1].count(v1[ind]) && mp[0].count(v1[ind])){
-        sum+=max((v1[ind]+fun(dp,v1,v2,mp,ck,ind+1,n,m)),(v1[ind]+fun(dp,v2,v1,mp,ck^1,mp[ck^1][v1[ind]]+1,m,n)));
-    }else sum+=(v1[ind]+fun(dp,v1,v2,mp,ck,ind+1,n,m));
-    return dp[ind][ck]=sum;
-}
 
-    int TreasureHunt(vector<int>& nums1, vector<int>& nums2) {
-        map<int,int> mp[2];
-        int n=nums1.size();
-        int m=nums2.size();
-        for(int i=0;i<n;i++){
-            mp[0][nums1[i]]=i;
+void solve(){
+    ll n,k;
+    cin>>n>>k;
+    ll s=0,n1=0,n2=0;
+    for(ll i=0;i<n;i++){
+        ll e;
+        cin>>e;
+        if(e<0){
+            s+=(e)/k;
+            if(e%k!=0)n1++;
+        }else{
+            s+=(e)/k;
+            if(e%k!=0)n2++;
         }
-        for(int i=0;i<m;i++){
-            mp[1][nums2[i]]=i;
-        }
-        vector<vector<long long>> dp1(max(n,m),vector<long long>(2,-1)),dp2(max(n,m),vector<long long>(2,-1));
-         long long ans=max(fun(dp1,nums1,nums2,mp,0,0,n,m),fun(dp2,nums2,nums1,mp,1,0,m,n));
-         return (ans%mod);
     }
+    // cout<<s<<" "<<n1<<" "<<n2<<" ";
+    if(s<0 && abs(s)<=n2)yes;
+    else if(s>=0 && abs(s)<=n1)yes;
+    else no;
+}
 
 int main() {
     ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
@@ -62,13 +58,11 @@ int main() {
   //    freopen("output.txt","w",stdout);  
   //     #endif
        
-//   ll t;
-//   cin>>t;
-    //for(ll Z=0;Z<t;Z++)
+  ll t;
+  cin>>t;
+    for(ll Z=0;Z<t;Z++)
     {
-        //cout<<"Case #"<<Z+1<<": ";
-        vector<int> nums1 = {1,3,5,7,9}, nums2 = {3,5,100};
-      cout<<TreasureHunt(nums1,nums2);
+      solve();
     }
   }
 /*
