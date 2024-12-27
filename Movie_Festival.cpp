@@ -108,12 +108,12 @@ ll nPr(ll n, ll r)
 
 /*********************************************************************************************************************************************************************************************************/
 
-bool comp(pair<ll, pair<ll, ll>> a, pair<ll, pair<ll, ll>> b)
+bool comp(pair<ll, ll>& a, pair<ll, ll>& b)
 {
-  if (a.ff == b.ff)
-    return a.ss.ff < b.ss.ff;
+  // if (a.ff == b.ff)
+  //   return a.ss.ff < b.ss.ff;
   // if(a.ss.ff==b.ss.ff)return a.ss.ff<b.ss.ff;
-  return a.ff > b.ff;
+  return a.ss < b.ss;
 }
 
 int main()
@@ -138,15 +138,18 @@ int main()
       cin >> a >> b;
       vp.pb({a, b});
     }
-    sort(vp.begin(), vp.end());
+    sort(vp.begin(), vp.end(), comp);
+    // for(auto it :vp){
+    //   cout<<it.ff<<" "<<it.ss<<endl;
+    // }
     ll c = 0;
-    ll a = INT_MAX;
-    for (ll i = n - 1; i >= 0; i--)
+    ll a = INT_MIN;
+    for (ll i = 0; i < n; i++)
     {
-      if (vp[i].ss <= a)
+      if (vp[i].ff >= a)
       {
         c++;
-        a = vp[i].ff;
+        a = vp[i].ss;
       }
     }
     // for(auto it:vp)cout<<it.ff<<" "<<it.ss<<Endl;
